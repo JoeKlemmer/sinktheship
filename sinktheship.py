@@ -1,4 +1,4 @@
-import random
+1import random
 import os
 
 random.seed()
@@ -32,7 +32,7 @@ You may exit the game at any time by hitting \"Ctrl-C\".
 def pause():
     pause = input("Press any key to continue...")
     
-# Build a 2 dimentional array of the size chosen
+# Build a 2 dimensional array of the size chosen
 def buildGrid(gSize):
     for i in range(gSize):
         for j in range(gSize):
@@ -67,7 +67,42 @@ def getUsersCoordinates(gSize):
     acrossCoord = int(input("Enter across coordinate: "))
     downCoord = int(input("Enter down coordinate: "))
 
-    playingGrid[downCoord - 1][acrossCoord - 1] = "  X"
+    playingGrid[downCoord - 1][acrossCoord - 1] = "  @"
+
+def placeShip(gSize):
+
+    direction = random.randint(1, 4)
+    limiter = random.randint(0, 5)
+    gridSize = random.randint(0, gSize)
+    i = 0
+
+    while i < 4:
+        if direction == 1:
+            playingGrid[limiter+i][gridSize] = "  @"
+            shipLocation[gridSize][limiter+i] = "  @"
+        elif direction == 2:
+            playingGrid[(limiter + 3) - i][gridSize] = "  @"
+            shipLocation[gridSize][(limiter + 3) - i] = "  @"
+        elif direction == 3:
+            playingGrid[gridSize][(limiter + 3) - i] = "  @"
+            shipLocation[(limiter + 3) - i][gridSize] = "  @"
+        elif direction == 4:
+            playingGrid[gridSize][limiter + i] = "  @"
+            shipLocation[limiter + i][gridSize] = "  @"
+        else:
+            print("Shit done did blowedup!")
+        i += 1
+    
+def calculateHit():
+    hitCounter = 0
+
+    if (playingGrid[downCoord-1][acrossCoord-1] == shipLocation[downCoord-1][acrossCoord-1]):
+        playingGrid[downCoord-1][acrossCoord-1] = "  X"
+        hitCounter += 1
+    else:
+        playingGrid[downCoord-1][acrossCoord-1] = "  *"
+
+    return hitCounter
 
 def playGame(gSize):
 
@@ -75,7 +110,7 @@ def playGame(gSize):
     playCounter = 0
 
     buildGrid(gSize)
-    # placeShip()
+    placeShip(gSize)
     displayGrid(gSize)
 
     while isItSunk < 4:
@@ -83,7 +118,8 @@ def playGame(gSize):
 
         getUsersCoordinates(gSize)
         
-        isItSunk += 1
+        #isItSunk += 1
+        isItSunk += calculateHit()
 
         displayGrid(gSize)
 

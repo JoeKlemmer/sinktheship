@@ -1,12 +1,10 @@
-1import random
+import random
 import os
 
 random.seed()
 
 # Variables
 
-acrossCoord = 0
-downCoord = 0
 playingTheGame = True
 choice = 0
 gridSize = 0
@@ -40,7 +38,7 @@ def buildGrid(gSize):
                         
 # Display the playing grid the size chosen
 def displayGrid(gSize):
-    os.system("clear")
+    #os.system("clear")
     for x in range(gSize):
         if x < 10:
             print("  " + str(x+1), end="")
@@ -62,12 +60,21 @@ def displayGrid(gSize):
         print(" |" + str(i+1))
 
 def getUsersCoordinates(gSize):
-#    hity = random.randint(1, gridSize - 1)
+    while True:
+        global acrossCoord
+        acrossCoord = int(input("Enter across coordinate: "))
+        if acrossCoord > gSize or acrossCoord <= 0:
+            print("Value must be greater than zero and less than or equal to " + str(gSize))
+        else:
+            break
 
-    acrossCoord = int(input("Enter across coordinate: "))
-    downCoord = int(input("Enter down coordinate: "))
-
-    playingGrid[downCoord - 1][acrossCoord - 1] = "  @"
+    while True:
+        global downCoord
+        downCoord = int(input("Enter down coordinate: "))
+        if (downCoord > gSize or downCoord <= 0):
+            print("Value must be greater than zero and less than or equal to " + str(gSize))
+        else:
+            break
 
 def placeShip(gSize):
 
@@ -79,24 +86,30 @@ def placeShip(gSize):
     while i < 4:
         if direction == 1:
             playingGrid[limiter+i][gridSize] = "  @"
-            shipLocation[gridSize][limiter+i] = "  @"
+            shipLocation[limiter+i][gridSize] = "  @"
         elif direction == 2:
             playingGrid[(limiter + 3) - i][gridSize] = "  @"
-            shipLocation[gridSize][(limiter + 3) - i] = "  @"
+            shipLocation[(limiter + 3) - i][gridSize] = "  @"
         elif direction == 3:
             playingGrid[gridSize][(limiter + 3) - i] = "  @"
-            shipLocation[(limiter + 3) - i][gridSize] = "  @"
+            shipLocation[gridSize][(limiter + 3) - i] = "  @"
         elif direction == 4:
             playingGrid[gridSize][limiter + i] = "  @"
-            shipLocation[limiter + i][gridSize] = "  @"
+            shipLocation[gridSize][limiter + i] = "  @"
         else:
-            print("Shit done did blowedup!")
+            print("Shit done did blowed up!")
         i += 1
-    
+
 def calculateHit():
     hitCounter = 0
 
-    if (playingGrid[downCoord-1][acrossCoord-1] == shipLocation[downCoord-1][acrossCoord-1]):
+    print("P: ", end="")
+    print(playingGrid[downCoord-1][acrossCoord-1])
+
+    print("S: ", end="")
+    print(shipLocation[downCoord-1][acrossCoord-1])
+
+    if playingGrid[downCoord - 1][acrossCoord - 1] == shipLocation[downCoord - 1][acrossCoord - 1]:
         playingGrid[downCoord-1][acrossCoord-1] = "  X"
         hitCounter += 1
     else:
@@ -117,8 +130,7 @@ def playGame(gSize):
         playCounter += 1
 
         getUsersCoordinates(gSize)
-        
-        #isItSunk += 1
+
         isItSunk += calculateHit()
 
         displayGrid(gSize)

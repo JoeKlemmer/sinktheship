@@ -7,10 +7,10 @@ random.seed()
 
 playingTheGame = True
 choice = 0
-gridSize = 0
+gridsize = 0
 
-shipLocation = [[int(j) for j in range(35)] for i in range(35)]
-playingGrid = [[int(j) for j in range(35)] for i in range(35)]
+shipLocation = [[int(j) for j in range(35)] for _ in range(35)]
+playingGrid = [[int(j) for j in range(35)] for _ in range(35)]
 
 displayHelpInfo = """
 The object of the game is to sink the ship.  There will be one ship 
@@ -31,77 +31,90 @@ def pause():
     pause = input("Press any key to continue...")
     
 # Build a 2 dimensional array of the size chosen
-def buildGrid(gSize):
-    for i in range(gSize):
-        for j in range(gSize):
+def build_grid(gsize):
+    for i in range(gsize):
+        for j in range(gsize):
             playingGrid[i][j] = "  ."
                         
 # Display the playing grid the size chosen
-def displayGrid(gSize):
-    #os.system("clear")
-    for x in range(gSize):
+def display_grid(gsize):
+    # os.system("clear")
+    for x in range(gsize):
         if x < 10:
             print("  " + str(x+1), end="")
         else:
             print(" " + str(x+1), end="")
     print()
     
-    for y in range(gSize):
-        if y < 10:
-            print("---", end="")
+    for y in range(gsize):
+        if y == 0:
+            print(" --", end="")
         else:
             print("---", end="")
-        if y == gSize - 1:
+
+        if y == gsize - 1:
             print("-\\")
 
-    for i in range(gSize):
-        for j in range(gSize):
+    for i in range(gsize):
+        for j in range(gsize):
             print(playingGrid[i][j], end="")
         print(" |" + str(i+1))
 
-def getUsersCoordinates(gSize):
+def get_users_coordinates(gsize):
     while True:
-        global acrossCoord
-        acrossCoord = int(input("Enter across coordinate: "))
-        if acrossCoord > gSize or acrossCoord <= 0:
-            print("Value must be greater than zero and less than or equal to " + str(gSize))
+        try:
+            global acrossCoord
+            acrossCoord = int(input("Enter across coordinate: "))
+        except ValueError:
+            print("Value must be a number")
         else:
-            break
+            if acrossCoord > gsize or acrossCoord <= 0:
+                print("Value must be greater than zero and less than or equal to " + str(gsize))
+            else:
+                break
 
     while True:
-        global downCoord
-        downCoord = int(input("Enter down coordinate: "))
-        if (downCoord > gSize or downCoord <= 0):
-            print("Value must be greater than zero and less than or equal to " + str(gSize))
+        try:
+            global downCoord
+            downCoord = int(input("Enter down coordinate: "))
+        except ValueError:
+            print("Value must be a number")
         else:
-            break
+            if (downCoord > gsize or downCoord <= 0):
+                print("Value must be greater than zero and less than or equal to " + str(gsize))
+            else:
+                break
 
-def placeShip(gSize):
+def place_ship(gsize):
 
     direction = random.randint(1, 4)
     limiter = random.randint(0, 5)
-    gridSize = random.randint(0, gSize)
+    gridsize = random.randint(0, (gsize - 1))
     i = 0
 
     while i < 4:
-        if direction == 1:
-            playingGrid[limiter+i][gridSize] = "  @"
-            shipLocation[limiter+i][gridSize] = "  @"
-        elif direction == 2:
-            playingGrid[(limiter + 3) - i][gridSize] = "  @"
-            shipLocation[(limiter + 3) - i][gridSize] = "  @"
-        elif direction == 3:
-            playingGrid[gridSize][(limiter + 3) - i] = "  @"
-            shipLocation[gridSize][(limiter + 3) - i] = "  @"
-        elif direction == 4:
-            playingGrid[gridSize][limiter + i] = "  @"
-            shipLocation[gridSize][limiter + i] = "  @"
+        if direction == 1:  # North
+            print("N" + str(limiter+i) + "x" + str(gridsize))
+            playingGrid[limiter+i][gridsize] = "  @"
+            shipLocation[limiter+i][gridsize] = "  @"
+        elif direction == 2:    #South
+            print("S" + str(limiter + 3) - i + "x" + str(gridsize))
+            playingGrid[(limiter + 3) - i][gridsize] = "  @"
+            shipLocation[(limiter + 3) - i][gridsize] = "  @"
+        elif direction == 3:    #East
+            print("E" + str(gridsize) + "x" + str((limiter + 3) - i))
+            playingGrid[gridsize][(limiter + 3) - i] = "  @"
+            shipLocation[gridsize][(limiter + 3) - i] = "  @"
+        elif direction == 4:    #West
+            print("W" + str(gridsize) + "x" + str(limiter + i))
+            playingGrid[gridsize][limiter + i] = "  @"
+            shipLocation[gridsize][limiter + i] = "  @"
         else:
             print("Shit done did blowed up!")
         i += 1
 
-def calculateHit():
-    hitCounter = 0
+def calculate_hit():
+    hit_counter = 0
 
     print("P: ", end="")
     print(playingGrid[downCoord-1][acrossCoord-1])
@@ -111,32 +124,32 @@ def calculateHit():
 
     if playingGrid[downCoord - 1][acrossCoord - 1] == shipLocation[downCoord - 1][acrossCoord - 1]:
         playingGrid[downCoord-1][acrossCoord-1] = "  X"
-        hitCounter += 1
+        hit_counter += 1
     else:
         playingGrid[downCoord-1][acrossCoord-1] = "  *"
 
-    return hitCounter
+    return hit_counter
 
-def playGame(gSize):
+def play_game(gsize):
 
-    isItSunk = 0
-    playCounter = 0
+    is_is_sunk = 0
+    play_counter = 0
 
-    buildGrid(gSize)
-    placeShip(gSize)
-    displayGrid(gSize)
+    build_grid(gsize)
+    place_ship(gsize)
+    display_grid(gsize)
 
-    while isItSunk < 4:
-        playCounter += 1
+    while is_is_sunk < 4:
+        play_counter += 1
 
-        getUsersCoordinates(gSize)
+        get_users_coordinates(gsize)
 
-        isItSunk += calculateHit()
+        is_is_sunk += calculate_hit()
 
-        displayGrid(gSize)
+        display_grid(gsize)
 
     print("\n\"Hey! You sunk my ship!\"")
-    print("\"It took you " + str(playCounter) + " shots to sink it.\"")
+    print("\"It took you " + str(play_counter) + " shots to sink it.\"")
 
 
 # Initial game menu
@@ -152,17 +165,17 @@ while playingTheGame:
     choice = input("Enter your choice: ")
 
     if str(choice) == "1":
-        playGame(10)
+        play_game(10)
         break
     elif str(choice) == "2":
-        playGame(15)
+        play_game(15)
         break
     elif str(choice) == "3":
-        playGame(20)
+        play_game(20)
         break
     elif str(choice) == "H" or str(choice) == "h":
         print(displayHelpInfo)
-        gridSize = 0
+        gridsize = 0
         pause()
     elif str(choice) == "Q" or str(choice) == "q":
         playingTheGame = False

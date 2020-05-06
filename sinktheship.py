@@ -15,7 +15,7 @@ The object of the game is to sink the ship.  There will be one ship
 on the grid.  The player will choose horizontal and virtical coordinates 
 and the game will calculate whether those coordiantes were a hit or a 
 miss.  An \"X\" will mark a hit and \"*\" a miss.  The difficulty levels 
-will be set as follows; "
+will be set as follows;
 
  - Easy will be a grid of 10 x 10
  - Normal will be a grid of 15 x 15

@@ -35,7 +35,7 @@ def build_grid(gsize):
 
 # Display the playing grid the size chosen
 def display_grid(gsize):
-    # os.system("clear")
+    os.system("clear")
     for x in range(gsize):
         if x < 10:
             print("  " + str(x+1), end="")
@@ -83,9 +83,12 @@ def get_users_coordinates(gsize):
             else:
                 break
 
+# Determin where and in what doirecton to place the ship
 def place_ship(gsize):
 
     direction = random.randint(1, 4)
+
+    # The limiter keeps the ship from being placed outside the grid
     limiter = random.randint(0, 5)
     gridsize = random.randint(0, (gsize - 1))
     i = 0
@@ -104,9 +107,11 @@ def place_ship(gsize):
            # playing_grid[gridsize][limiter + i] = "  @"    # <-- Used for debugging
            ship_location[gridsize][limiter + i] = "  @"
         else:
+            # If we end up here, something broke
             print("Shit done did blowed up!")
         i += 1
 
+# CHeck to see if the coordinates the user entered hit the ship
 def calculate_hit():
     hit_counter = 0
 
@@ -118,6 +123,7 @@ def calculate_hit():
 
     return hit_counter
 
+# Basically, the main game loop
 def play_game(gsize):
 
     is_it_sunk = 0

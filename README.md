@@ -1,7 +1,7 @@
 Sink the Ship
 
 Python port for the Terminal Jam Reboot
-<https:itch.io/jam/terminal-jam-reboot> of a C++ game is wrote in 2008
+<https://itch.io/jam/terminal-jam-reboot> of a C++ game is wrote in 2008
 
 'SinkTheShip' is similar to Battle Ship.
 

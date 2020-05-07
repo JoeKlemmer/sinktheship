@@ -32,10 +32,10 @@ def build_grid(gsize):
     for i in range(gsize):
         for j in range(gsize):
             playing_grid[i][j] = "  ."
-                        
+
 # Display the playing grid the size chosen
 def display_grid(gsize):
-    #os.system("clear")
+    # os.system("clear")
     for x in range(gsize):
         if x < 10:
             print("  " + str(x+1), end="")
@@ -92,17 +92,17 @@ def place_ship(gsize):
 
     while i < 4:
         if direction == 1:  # North
-#            playing_grid[limiter+i][gridsize] = "  @"
-            ship_location[limiter+i][gridsize] = "  @"
+           # playing_grid[limiter+i][gridsize] = "  @"    # <-- Used for debugging
+           ship_location[limiter+i][gridsize] = "  @"
         elif direction == 2:    #South
-#            playing_grid[(limiter + 3) - i][gridsize] = "  @"
-            ship_location[(limiter + 3) - i][gridsize] = "  @"
+           # playing_grid[(limiter + 3) - i][gridsize] = "  @"    # <-- Used for debugging
+           ship_location[(limiter + 3) - i][gridsize] = "  @"
         elif direction == 3:    #East
-#            playing_grid[gridsize][(limiter + 3) - i] = "  @"
-            ship_location[gridsize][(limiter + 3) - i] = "  @"
+           # playing_grid[gridsize][(limiter + 3) - i] = "  @"    # <-- Used for debugging
+           ship_location[gridsize][(limiter + 3) - i] = "  @"
         elif direction == 4:    #West
-#            playing_grid[gridsize][limiter + i] = "  @"
-            ship_location[gridsize][limiter + i] = "  @"
+           # playing_grid[gridsize][limiter + i] = "  @"    # <-- Used for debugging
+           ship_location[gridsize][limiter + i] = "  @"
         else:
             print("Shit done did blowed up!")
         i += 1
@@ -127,8 +127,10 @@ def play_game(gsize):
     place_ship(gsize)
     display_grid(gsize)
 
-    while is_it_sunk < 4 and play_counter < gsize:
+    while is_it_sunk < 4 and play_counter < gsize + 5:
         play_counter += 1
+
+        print("You have " + str((gsize + 6) - play_counter) + " attempts left")
 
         get_users_coordinates(gsize)
 
@@ -139,13 +141,11 @@ def play_game(gsize):
     if is_it_sunk == 4:
         print("\n\"Hey! You sunk my ship!\"")
         print("\"It took you " + str(play_counter) + " shots to sink it.\"")
-    elif play_counter == gsize:
-        print("\n\"Ha! You took too long. I got away!\"")
     else:
-        print("Shit done did blowed up again!")
+        print("\n\"Ha! You took too long. I got away!\"")
+        print("Better luck next time.")
 
 # Initial game menu
-
 print("\nGreetings Professor Falken.")
 print("Welcome to \"Sink My Ship\"")
 

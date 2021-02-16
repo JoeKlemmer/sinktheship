@@ -5,7 +5,7 @@
 Python port for the Terminal Jam Reboot
 <https://itch.io/jam/terminal-jam-reboot> of a C++ game is wrote in 2008
 
-'SinkTheShip' is similar to Battle Ship.
+_SinkTheShip_ is similar to Battle Ship.
 
 The object of the game is to sink the ship.  There will be one ship 
 on the grid.  The player will choose horizontal and virtical coordinates 

@@ -1,4 +1,4 @@
-![Packagist License](https://img.shields.io/packagist/l/JoeKlemmer/sinktheship)
+![Packagist License](https://img.shields.io/l/JoeKlemmer/sinktheship)
 
 # Sink the Ship #
 

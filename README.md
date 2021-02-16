@@ -1,4 +1,5 @@
 ![GitHub](https://img.shields.io/github/license/JoeKlemmer/sinktheship)
+[![Updated Badge](https://badges.pufler.dev/updated/JoeKlemmer/sinktheship)](https://badges.pufler.dev)
 
 # Sink the Ship #
 
